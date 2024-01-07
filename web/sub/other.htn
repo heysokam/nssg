@@ -1,0 +1,16 @@
+import ssg
+
+proc page () :string=
+  result = html:
+    heads:
+      title "Test SSG4"
+      meta name="foo", content="bar"
+    bodys style="background-color: #333333;":
+      p class="mb-3 text-gray-500 dark:text-gray-400", "Powered by Nim and TailwindCSS"
+      <!--"HTML Comment"
+      a text="Nim", href="https://nim-lang.org"
+      divs:
+        p "Example"
+
+when isMainModule:
+  write page
