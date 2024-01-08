@@ -1,0 +1,3 @@
+@tailwind base;        /* Tailwind’s base style. Basically Normalize.css plus some additional styling.  */
+@tailwind components;  /* Component classes registered by the plugins found in tailwind.config.js file. */
+@tailwind utilities;   /* Utility classes provided by Tailwind CSS. Generated based on the config file. */
