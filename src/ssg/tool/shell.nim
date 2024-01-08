@@ -4,9 +4,13 @@ from std/strformat import `&`
 import ../cfg
 import ./paths
 import ./logger
-proc sh *(cmd :string; args :varargs[string, `$`]) :void=  discard os.execShellCmd(cmd & " " & args.join(" "))
-proc run *(trg :Path) :void=
+type ShellError = object of CatchableError
+template err(msg:string)= raise newException(ShellError,msg)
+proc sh *(cmd :string; args :varargs[string, `$`]) :void=
+  let command = cmd & " " & args.join(" ")
+  if os.execShellCmd(command) != 0: err "Failed to run: "&command
+proc run *(trg :Path; msg :string= "Running nimscript file: "; report :bool= on) :void=
   if trg.splitFile.ext notin ValidExtensions: return
-  dbg "Compiling file: ", trg.string
+  if report: info msg, trg.string
   if not cacheDir.dirExists(): createDir(cacheDir)
   sh cfg.nimBin, "e -d:minissg --hints:off", &"-d:rootDir:{string rootDir} --path:{string ssgDir}", trg.string

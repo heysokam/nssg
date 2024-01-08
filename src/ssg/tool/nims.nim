@@ -3,6 +3,9 @@ when not defined(minissg)   : {.error: "\n  [minissg:Error] -d:minissg must be d
 
 from std/os import changeFileExt, relativePath, absolutePath
 from std/strutils import replace
+import ./paths
+export paths
+export replace, changeFileExt, relativePath, absolutePath
 
 template write *(pageMarkup :proc():string) {.dirty.}=
   # Figure out the target folder

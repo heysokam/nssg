@@ -1,4 +1,5 @@
 from std/strutils import join
+from std/os import setFilePermissions, FilePermission
 # @deps ssg
 import ../cfg
 import ./paths
@@ -14,10 +15,15 @@ proc changed *(file :Path) :bool=
   if not pub.fileExists() or not trg.fileExists():
     modtime.write( file, trg )
     return true
-  let curr = $modtime.get(file)
+  let curr = modtime.get(file)
   let last = readLines(trg.string, 1).join()
   if curr != last:
     modtime.write( file, trg )
     return true
   return false
 
+proc isExec *(trg :Path) :bool=
+  let perms = os.getFilePermissions(trg.string)
+  return os.FilePermission.fpUserExec in perms or os.FilePermission.fpGroupExec in perms or os.FilePermission.fpOthersExec in perms
+proc setExec *(trg :Path) :void=  os.setFilePermissions(trg.string, {os.FilePermission.fpUserRead, os.FilePermission.fpUserWrite, os.FilePermission.fpUserExec}, followSymlinks = false)
+  ## @descr Sets the given {@arg trg} binary flags to be executable for the current user.

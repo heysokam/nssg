@@ -1,20 +1,9 @@
 # @deps ssg
-import ./ssg/cfg
-import ./ssg/dsl
-import ./ssg/tool/paths
-import ./ssg/tool/shell
-
+import ./ssg/cfg ; export cfg
+import ./ssg/dsl ; export dsl
 # @section Exports for the page scripts
-export cfg, dsl
 when defined(nimscript):
-  include ./ssg/nims
-
+  include ./ssg/tool/nims
+# @section Main Entry Point of the standalone binary
 when isMainModule:
-  import ./ssg/tools
-  proc loop=
-    while true:
-      for file in cfg.srcDir.walkDirRec():
-        if file.changed: run file
-
-  for file in cfg.srcDir.walkDirRec():
-    if file.changed: run file
+  include ./ssg/entry
