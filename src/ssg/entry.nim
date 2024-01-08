@@ -3,6 +3,8 @@ import ./tool/paths
 import ./tool/shell
 import ./tool/files
 import ./tailwind
+import ./htn
+import ./nim
 
 type SSGError = object of CatchableError
 template err(msg:string)= raise newException(SSGError,msg)
@@ -20,7 +22,8 @@ proc run=
   tailwind.init()
   info "Compiling project files at "&cfg.srcDir
   for file in cfg.srcDir.walkDirRec():
-    if file.changed: run file, "Compiling file: "
+    if   htn.isValid(file): htn.build(file)
+    elif nim.isValid(file): nim.build(file)
   tailwind.build()
   info "Done."
 #___________________

@@ -396,5 +396,6 @@ macro bodys *(inner :untyped) :HtmlNode=
 func newHtml *(head,body :HtmlNode) :HtmlNode {.inline.}=
   HtmlNode(kind: Html, head: head, body: body)
 macro html *(inner :untyped) :string=
-  newCall("minifyHtml", newCall("render", newCall("newHtml", inner[0], inner[1])))
+  # newCall("minifyHtml", newCall("render", newCall("newHtml", inner[0], inner[1])))
+  newCall("render", newCall("newHtml", inner[0], inner[1]))
 

@@ -3,8 +3,9 @@ import ssg
 proc page () :string=
   result = html:
     heads:
-      title "Test SSG4"
+      title "Test μSSG"
       meta name="foo", content="bar"
+      link href="css/tailwind.css", rel="stylesheet"
     bodys style="background-color: #333333;":
       p class="mb-3 text-gray-500 dark:text-gray-400", "Powered by Nim and TailwindCSS"
       <!--"HTML Comment"
