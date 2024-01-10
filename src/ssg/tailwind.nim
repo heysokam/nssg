@@ -9,7 +9,10 @@ import ./tool/shell
 const DefaultConfigTempl = """
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["$1/**/*.{html,js}"],
+  content: {
+    relative : true, // Make content path relative to this file
+    files    : ["$1/**/*.{html,js}"],
+  },
   theme: {
     extend: {},
   },

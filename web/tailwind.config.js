@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["../public/**/*.{html,js}"],
+  content: {
+    relative : true, // Make content path relative to this file
+    files    : ["../public/**/*.{html,js}"],
+  },
   theme: {
     extend: {},
   },
